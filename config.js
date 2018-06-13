@@ -12,9 +12,9 @@ const config = {
 		'./assets/js'
 	],
 	'css_src_file': './assets/css/main.less',
-	'css_dest_file': '../algolia-test/node-vanila/static/c/main.css',
+	'css_dest_file': '../algolia-test/application/static/c/main.css',
 	'js_src_file': './assets/js/main.js',
-	'js_dest_file': '../algolia-test/node-vanila/static/j/main.es5.min.js'
+	'js_dest_file': '../algolia-test/application/static/j/main.es5.min.js'
 };
 
 module.exports = config;
