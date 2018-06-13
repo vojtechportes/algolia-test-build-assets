@@ -2,11 +2,21 @@
  * Equalize heights of elments in container
 */
 
-$.fn.equalizeHeights = function () {
+$.fn.equalizeHeights = () => {
     const maxHeight = this.map((i, e) => {
         return $(e).height();
     }).get();
     return this.height(Math.max.apply(this, maxHeight));
+};
+
+/**
+ * Detect MSIE and add class to bode element
+*/
+
+const detectMSIE = () => {
+    if (/Edge\/|Trident\/|MSIE /.test(window.navigator.userAgent)) {
+        $('body').addClass('b-msie');
+    }
 };
 
 /**
@@ -325,4 +335,5 @@ const loadItems = () => {
     }
 };
 
+detectMSIE();
 loadItems();

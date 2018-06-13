@@ -3,6 +3,7 @@ const path = require('path');
 const ejs = require('ejs');
 const babel = require('@babel/core');
 const uglifyjs = require('uglify-js');
+const cleancss = require('clean-css');
 const recursive = require('recursive-readdir');
 const StringDecoder = require('string_decoder').StringDecoder;
 const decoder = new StringDecoder('utf8');
@@ -46,7 +47,9 @@ const buildCSS = () => {
             if (e) { console.log(e); return false; }
 
             try {
-                writeCSS(output.css);
+                output.css_min = new cleancss({}).minify(output.css).styles;
+
+                writeCSS(output.css_min);
                 console.log('CSS build successfull');
                 console.log('-----------------');
                 return false;
