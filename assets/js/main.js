@@ -1,15 +1,4 @@
 /**
- * Equalize heights of elments in container
-*/
-
-$.fn.equalizeHeights = () => {
-    const maxHeight = this.map((i, e) => {
-        return $(e).height();
-    }).get();
-    return this.height(Math.max.apply(this, maxHeight));
-};
-
-/**
  * Detect MSIE and add class to bode element
 */
 
@@ -77,17 +66,16 @@ const setPager = (element, minData = {'nbPages': 0, 'page': 0, 'nbHits': 0}, set
 }
 
 /**
- * Load items to containers with data-search-settings
+ * Load items to containers with data-search-settings.
  * data-search-settings may contain following object attributes:
  *
- * @attr {String} type - search_get-filtered, search_get-all
- * @attr {Integer} page
- * @attr {String} query
- * @attr {String} target - target defines element into which will be the items loaded
- * @attr {Array} fields - array of fields (placeholder) used in item template
- * @attr {String} inputMethod - type, default
- * @attr {String} inputTarget
- * @attr {String} equalizeHeights
+ * @prop {String} type - search_get-filtered, search_get-all
+ * @prop {Integer} page
+ * @prop {String} query
+ * @prop {String} target - target defines element into which will be the items loaded
+ * @prop {Array} fields - array of fields (placeholder) used in item template
+ * @prop {String} inputMethod - type, default
+ * @prop {String} inputTarget
  *
  * @return {Void}
 */
@@ -180,10 +168,15 @@ const loadItems = () => {
             const page = settings.page;
 
             let query = settings.query;
+            let key = settings.key;
             let $inputTarget;
 
             if (query !== '') {
                 query = '?query=' + query;
+            }
+
+            if (key !== '') {
+
             }
 
             let itemTpl = $container.find('.template__item').html();
@@ -230,7 +223,10 @@ const loadItems = () => {
                             let html = itemTpl;
 
                             settings.fields.forEach((key) => {
-                                let pattern = new RegExp('(\{\{' + key + '(?:\|\|(.*?|\}\}))?\}\})', 'g'); /* Match {{abc}} and {{abc||def}} placeholders */
+                                
+                                /* Match {{abc}} and {{abc||def}} placeholders */
+
+                                let pattern = new RegExp('(\{\{' + key + '(?:\|\|(.*?|\}\}))?\}\})', 'g');
                                 let match;
 
                                 do {
@@ -250,15 +246,7 @@ const loadItems = () => {
                             });
 
                             $list.append(html);
-
-                            if (k + 1 % 4 == 0) {
-                                $list.append('<div class="clearfix" />');
-                            }
                         });
-
-                        if (typeof settings.equalizeHeights !== 'undefined') {
-                            $list.find(settings.equalizeHeights).equalizeHeights();
-                        }
 
                         navigateElements($list.find('.listing__item'));
                     }
@@ -335,5 +323,50 @@ const loadItems = () => {
     }
 };
 
+/**
+ * Set click events to language selector
+ *
+ * @return {Void}
+*/
+
+const setLanguageSelector = () => {
+    $('.language-selector--dropdown').off('click.language-selector').on('click.language-selector', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const $target = $(event.currentTarget);
+
+        $target.find('.language-selector__content').toggleClass('language-selector__content--opened');
+    });
+};
+
+/**
+ * Toggle message states
+ *
+ * @return {Void}
+*/
+
+const toggleMessage = () => {
+    $('.toggle-message').off('click.toggle-message').on('click.toggle-message', (event) => {
+        console.log('click');
+        event.preventDefault();
+        event.stopPropagation();
+
+        const $target = $(event.currentTarget).closest('.message');
+
+        if ($target.hasClass('message--warning')) {
+            $target.removeClass('message--warning').addClass('message--error');
+        } else if ($target.hasClass('message--error')) {
+            $target.removeClass('message--error').addClass('message--success');
+        } else if ($target.hasClass('message--success')) {
+            $target.removeClass('message--success').addClass('message--info');      
+        } else if ($target.hasClass('message--info')) {
+            $target.removeClass('message--info').addClass('message--warning');
+        }                        
+    });
+};
+
 detectMSIE();
 loadItems();
+setLanguageSelector();
+toggleMessage();

@@ -1,0 +1,30 @@
+.message {
+	margin: 20px 0;
+	border-radius: @message-border-radius;
+	box-shadow: 0px 5px 10px 0px rgba(0,0,0,@message-drop-shadow);
+	background: @white;
+
+	&__inner {
+		margin: 20px;
+	}
+
+	&--error {
+		background: fade(@error, 10%);
+		border: 1px solid @error;
+	}
+
+	&--warning {
+		background: fade(@warning, 10%);
+		border: 1px solid @warning;
+	}
+
+	&--success {
+		background: fade(@success, 10%);
+		border: 1px solid @success;
+	}	
+
+	&--info {
+		background: fade(@info, 10%);
+		border: 1px solid @info;
+	}		
+}
