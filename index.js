@@ -120,7 +120,7 @@ config.css_paths.forEach((_path, key) => {
             console.log('> File ' + filename + ' changed');
             console.log(' ');
 
-    		cssBuild();        
+    		buildCSS();        
 
             setTimeout(() => {
                 working = false;
@@ -140,7 +140,7 @@ config.js_paths.forEach((_path, key) => {
             console.log('> File ' + filename + ' changed');
             console.log(' ');
 
-            jsBuild();        
+            buildJS();        
 
             setTimeout(() => {
                 working = false;

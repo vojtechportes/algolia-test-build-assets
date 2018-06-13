@@ -1,6 +1,6 @@
-$.fn.refresh = function() {
-    return $(this.selector);
-};
+/**
+ * Equalize heights of elments in container
+*/
 
 $.fn.equalizeHeights = function () {
     const maxHeight = this.map((i, e) => {
@@ -9,40 +9,45 @@ $.fn.equalizeHeights = function () {
     return this.height(Math.max.apply(this, maxHeight));
 };
 
-/**/
+/**
+ * Flatten JSON object
+ *
+ * @param {Object} data
+ * @return {Object}
+*/
 
-const getURLVars = (querystring = false) => {
-    let vars = {}, hash;
-    const hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-    
-    for(let i = 0; i < hashes.length; i++) {
-        hash = hashes[i].split('=');
-        vars[hash[0]] = hash[1];
-    }
-
-    if (querystring) {
-        return serialize(vars);
-    } else {
-        return vars;
-    }
-}
-
-/**/
-
-const serialize = (obj, prefix) => {
-    let str = [], p;
-
-    for (p in obj) {
-        if (obj.hasOwnProperty(p)) {
-            let k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
-            str.push((v !== null && typeof v === "object") ?
-            serialize(v, k) :
-            encodeURIComponent(k) + "=" + encodeURIComponent(v));
+const flatten = (data) => {
+    var result = {};
+    const recurse = (cur, prop) => {
+        if (Object(cur) !== cur) {
+            result[prop] = cur;
+        } else if (Array.isArray(cur)) {
+             for(var i=0, l=cur.length; i<l; i++)
+                 recurse(cur[i], prop ? prop+"."+i : ""+i);
+            if (l == 0)
+                result[prop] = [];
+        } else {
+            var isEmpty = true;
+            for (var p in cur) {
+                isEmpty = false;
+                recurse(cur[p], prop ? prop+"."+p : p);
+            }
+            if (isEmpty)
+                result[prop] = {};
         }
     }
-
-    return str.join("&");
+    recurse(data, "");
+    return result;
 }
+
+/**
+ * Set pager actual page and number of pages and return new settings object
+ *
+ * @param {String|Node} element
+ * @param {Object} minData
+ * @param {Object} settings
+ * @return {Object}
+*/
 
 const setPager = (element, minData = {'nbPages': 0, 'page': 0, 'nbHits': 0}, settings) => {
     console.log(minData);
@@ -177,8 +182,10 @@ const loadItems = () => {
                         $list.append('<p class="no-results">Sorry, there are no items matching <em>' + queryContent + '</em> :(</p>');
                     } else {                       
                         Object.keys(data).forEach((k) => {
-                            let item = data[k];
+                            let item = flatten(data[k]);
                             let html = itemTpl;
+
+                            console.log(item);
 
                             settings.fields.forEach((key) => {
                                 let pattern = new RegExp('(\{\{' + key + '(?:\|\|(.*?|\}\}))?\}\})', 'g');
