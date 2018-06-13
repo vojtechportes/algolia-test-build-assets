@@ -1,0 +1,159 @@
+/* ### Box model */
+
+html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    box-sizing: inherit
+}
+
+html,
+body {
+    height: 100%;
+}
+
+/* ### Body definition */
+
+body {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+
+    /* Fallback for IE8 */
+
+    .br-ie8 & {
+        min-width: 1260px;
+    }
+}
+
+/* ### Image reset */
+
+img {
+    padding: 0;
+    margin: 0
+}
+
+/* ### Form reset */
+
+form {
+    margin: 0;
+    padding: 0
+}
+
+/* ### Horizontal line definition */
+
+hr {
+    color: transparent;
+    height: 1px;
+    border: none;
+    text-align: center;
+    border-top: 1px solid @gray-4;
+    margin: 0 0 2em;
+}
+
+/* Table reset */
+
+table {
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0
+}
+
+table td {
+    margin: 0;
+    padding: 0
+}
+
+a img {
+    border: 0
+}
+
+h1, h2, h3, h4, h5 {
+    margin: 0;
+    padding: 0;
+}
+
+.clearfix {
+
+    clear: both;
+    overflow: hidden;
+    height: 0px;
+    width: 100%;
+}
+
+.template {
+    display: none;
+}
+
+.hide {
+    display: none;
+}
+
+.hide--desktop {
+    @media @desktop {
+        display: none;
+    }
+}
+
+.hide--tablet {
+    @media @tablet {
+        display: none;
+    }
+}
+
+.hide--mobile {
+    @media @mobile {
+        display: none;
+    }
+}
+
+.show {
+    display: block;
+}
+
+.show--desktop {
+    @media @desktop {
+        display: block;
+    }
+}
+
+.show--tablet {
+    @media @tablet {
+        display: block;
+    }
+}
+
+.show--mobile {
+    @media @mobile {
+        display: block;
+    }
+}
+
+.disabled {
+    opacity: 0.5 !important;
+    cursor: default !important;
+}
+
+.backdrop {
+    position: fixed;
+    z-index: 45;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+}
+
+.backdrop-active {
+    .listing,
+    .pager {
+        filter: blur(5px);
+    }
+}
