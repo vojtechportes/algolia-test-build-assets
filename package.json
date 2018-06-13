@@ -1,6 +1,10 @@
 {
-    "name": "algolia-test-less",
+    "name": "algolia-test-build-assets",
+    "author": "Vojtech Vaclav Portes",
+    "description": "Algolia Test Build assets script",
+    "license": "MIT",
     "version": "1.0.0",
+    "repository": "https://github.com/vojtechportes/algolia-test-build-assets.git",
     "main": "index.js",
     "scripts": {
         "start": "node index.js"
