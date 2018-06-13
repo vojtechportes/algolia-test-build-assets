@@ -93,7 +93,8 @@ const buildJS = () => {
             plugins: [
                 '@babel/transform-arrow-functions',
                 '@babel/transform-block-scoping',
-                'transform-es2015-parameters'
+                'transform-es2015-parameters',
+                '@babel/proposal-throw-expressions'
             ]
         };
 

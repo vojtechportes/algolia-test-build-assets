@@ -17,6 +17,7 @@
         "@babel/core": "7.0.0-beta.41",
         "@babel/plugin-transform-arrow-functions": "7.0.0-beta.41",
         "@babel/plugin-transform-block-scoping": "7.0.0-beta.41",
-        "babel-plugin-transform-es2015-parameters": "^6.24.1"
+        "babel-plugin-transform-es2015-parameters": "^6.24.1",
+        "@babel/plugin-proposal-throw-expressions": "7.0.0-beta.51"
     }
 }

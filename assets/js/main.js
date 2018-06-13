@@ -50,8 +50,6 @@ const flatten = (data) => {
 */
 
 const setPager = (element, minData = {'nbPages': 0, 'page': 0, 'nbHits': 0}, settings) => {
-    console.log(minData);
-
     const $element = $(element);
     const $count = $element.find('.pager__count');
     const $outof = $element.find('.pager__count-outof');
@@ -68,8 +66,27 @@ const setPager = (element, minData = {'nbPages': 0, 'page': 0, 'nbHits': 0}, set
     return settings;
 }
 
+/**
+ * Load items to containers with data-search-settings
+ * data-search-settings may contain following object attributes:
+ *
+ * @attr {String} type - search_get-filtered, search_get-all
+ * @attr {Integer} page
+ * @attr {String} query
+ * @attr {String} target - target defines element into which will be the items loaded
+ * @attr {Array} fields - array of fields (placeholder) used in item template
+ * @attr {String} inputMethod - type, default
+ * @attr {String} inputTarget
+ * @attr {String} equalizeHeights
+ *
+ * @return {Void}
+*/
+
 const loadItems = () => {
     if ($('[data-search-settings]').length > 0) {
+
+        /* List of keys that are ignored while searching */
+
         const searchKeyBlacklist = [
             'Delete',
             'Insert',
@@ -85,9 +102,19 @@ const loadItems = () => {
             'Alt',
             'Tab'
         ];
+
+        /* List of keys used to close search results */
+
         const searchKeyBackdrop = [
             'Escape'
         ];
+
+        /**
+         * Set navigation in search results using arrows
+         *
+         * @param {Node} items
+         * @return {Void}
+        */
 
         const navigateElements = (items) => {
             let $items = $(items);
@@ -120,6 +147,15 @@ const loadItems = () => {
             });
         };
 
+        /**
+         * Populate items into an container
+         *
+         * @param {String|Node} container
+         * @param {Object} settings - container settings (described in parent function description)
+         * @param {Boolean} usePager
+         * @return {Void|Error}
+        */
+
         const populateData = (container, settings, usePager = false) => {
             const apiPaths = {
                 'search_get-all': 'search/getAllData',
@@ -144,8 +180,6 @@ const loadItems = () => {
             itemTpl = $('<div/>').html(itemTpl).text();
 
             $list.empty();
-
-             console.log('/api/v1/' + accessType + '/' + apiPaths[settings.type] + '/' + page + query);
 
             $.ajax({
                 'url': '/api/v1/' + accessType + '/' + apiPaths[settings.type] + '/' + page + query
@@ -185,10 +219,8 @@ const loadItems = () => {
                             let item = flatten(data[k]);
                             let html = itemTpl;
 
-                            console.log(item);
-
                             settings.fields.forEach((key) => {
-                                let pattern = new RegExp('(\{\{' + key + '(?:\|\|(.*?|\}\}))?\}\})', 'g');
+                                let pattern = new RegExp('(\{\{' + key + '(?:\|\|(.*?|\}\}))?\}\})', 'g'); /* Match {{abc}} and {{abc||def}} placeholders */
                                 let match;
 
                                 do {
@@ -205,8 +237,6 @@ const loadItems = () => {
                                         }
                                     }
                                 } while (match);
-
-
                             });
 
                             $list.append(html);
@@ -223,10 +253,10 @@ const loadItems = () => {
                         navigateElements($list.find('.listing__item'));
                     }
                 } else {
-                    console.log('fail');
+                    return throw new Error(data);
                 }
             }).fail(data => {
-                console.log(data);
+                return throw new Error(data);
             });
         };
 
