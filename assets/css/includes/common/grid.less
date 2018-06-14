@@ -155,8 +155,40 @@
     }
 }
 
+@media @mobile, @tablet {
+    .row {
+        .col--2 {
+            flex: 0 1 33.33333332%;
+            max-width: 33.33333332%;
+        }
 
-@media @mobile {
+        .col--3 {
+            flex: 0 1 50%;
+            max-width: 50%;
+        }
+
+        .col--4 {
+            flex: 0 1 66.66666665%;
+            max-width: 66.66666665%;
+        }
+
+        .col--5 {
+            flex: 0 1 83.33333332%;
+            max-width: 83.33333332%;
+        }
+
+        .col--6,
+        .col--7,
+        .col--8,
+        .col--9,
+        .col--10 {
+            flex: 0 1 100%;
+            max-width: 100%;
+        }
+    }
+}
+
+@media @medium-mobile {
     .row {
         *zoom: 1;
         width: auto;

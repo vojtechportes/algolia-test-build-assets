@@ -109,11 +109,6 @@
 			}
 		}
 
-		.listing__item__image,
-		.listing__item__name {
-			float: left;
-		}
-
 		.button {
 			float: right;
 			margin: -1em 0 0;
@@ -141,10 +136,16 @@
 		.listing__item__image {
 			width: 50px;
 			margin-right: 20px;
+			float: left;
+
+			& + div {
+				float: left;
+				width: ~"calc(100% - 70px)";
+			}
 		}
 
 		.listing__item__name {
-			width: 50%;
+
 		}
 
 		border-bottom: 1px solid fade(@searchbar-primary, 10%);

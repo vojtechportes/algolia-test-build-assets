@@ -9,6 +9,13 @@ footer {
 		margin-top: 0;
 	}
 
+	.row .col--3 {
+		@media @mobile, @tablet {
+			flex: 0 1 100%;
+			max-width: 100%;
+		}
+	}
+
 	ul {
 		list-style-type: none;
 		margin: 0;
